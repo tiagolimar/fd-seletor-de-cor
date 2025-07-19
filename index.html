@@ -13,9 +13,15 @@
     <title>Seletor de Cor</title>
   </head>
   <body>
-    <div id="container-colors" class="d-flex flex-column w-100 gap-2 my-4"></div>
+    <div
+      id="container-colors"
+      class="d-flex flex-column w-100 gap-2 my-4"
+    ></div>
 
-    <form class="d-flex gap-2 my-4 mx-4 border p-4 rounded-3 shadow-sm bg-white" onsubmit="adicionarCor(event)">
+    <form
+      class="d-flex gap-2 my-4 mx-4 border p-4 rounded-3 shadow-sm bg-white"
+      onsubmit="adicionarCor(event)"
+    >
       <div class="form-group w-100 d-flex flex-column">
         <label for="nome">Nome do Sistema</label>
         <input type="text" id="nome" class="form-control" required />
@@ -23,19 +29,33 @@
 
       <div class="form-group w-100 d-flex flex-column">
         <label for="corBorda">Cor de Borda</label>
-        <input type="text" maxlength="2" id="corBorda" class="form-control" required oninput="obterCor(event)" />
+        <input
+          type="text"
+          maxlength="2"
+          id="corBorda"
+          class="form-control"
+          required
+          oninput="obterCor(event)"
+        />
       </div>
-      
+
       <div class="form-group w-100 d-flex flex-column">
         <label for="corFundo">Cor de Fundo</label>
-        <input type="text" maxlength="2" id="corFundo" class="form-control"  required oninput="obterCor(event)" />
+        <input
+          type="text"
+          maxlength="2"
+          id="corFundo"
+          class="form-control"
+          required
+          oninput="obterCor(event)"
+        />
       </div>
 
       <button class="btn btn-primary" type="submit">Adicionar</button>
     </form>
 
     <div class="container">
-      <table class="table" style="margin-bottom: 500px;">
+      <table class="table">
         <thead>
           <tr class="text-center">
             <th class="text-center">Nome do Sistema</th>
@@ -49,11 +69,43 @@
       </table>
     </div>
 
+    <div
+      class="modal fade"
+      id="variantColor"
+      tabindex="-1"
+      aria-labelledby="modalVariantColor"
+      aria-hidden="false"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modalVariantColor">Variações de Cores</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="color-line">
+                
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="adicionarDB()">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
       crossorigin="anonymous"
     ></script>
+    <script src="./js/conversor.js"></script>
     <script src="./js/db.js"></script>
     <script src="./js/script.js"></script>
   </body>

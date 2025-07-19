@@ -1,4 +1,10 @@
-let colors = [];
+let colors = [
+    {
+        name: "Default",
+        colorBorder: "#dedede",
+        colorBackground: "#fff"
+    }
+];
 
 function adicionarDB(color){
     colors.push(color);
@@ -6,7 +12,7 @@ function adicionarDB(color){
 }
 
 function removerDB(colorId){
-    colors = colors.filter((color,index) => index !== colorId);
+    colors = colors.filter((color,index) => index !== parseInt(colorId));
     renderTable();
 }
 
@@ -17,8 +23,8 @@ function renderTable(){
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td data-id="${index}">${color.name}</td>
-            <td data-id="${index}" style="background-color: ${color.colorBorder}">${color.colorBorder}</td>
-            <td data-id="${index}" style="background-color: ${color.colorBackground}">${color.colorBackground}</td>
+            <td class="clickable" data-bs-toggle="modal" data-bs-target="#variantColor" data-id="${index}" style="background-color: ${color.colorBorder}">${color.colorBorder}</td>
+            <td class="clickable" data-bs-toggle="modal" data-bs-target="#variantColor" data-id="${index}" style="background-color: ${color.colorBackground}">${color.colorBackground}</td>
 
             <td data-id="${index}">
                 <div class="mx-auto" style="
@@ -39,3 +45,5 @@ function renderTable(){
         tbody.appendChild(tr);
     });
 }
+
+renderTable();

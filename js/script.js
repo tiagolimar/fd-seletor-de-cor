@@ -1,5 +1,6 @@
 let getColorBorder = false;
 let getColorBackground = false;
+let lastInputActive = document.querySelector("#corBorda");
 
 function criarTabelaDeCores() {
     const colors = [
@@ -13,7 +14,7 @@ function criarTabelaDeCores() {
 
     colors.forEach((color, indexArray) => {
         const colorLine = document.createElement("div");
-        const classList = ["color-line", "d-flex", "w-100", "justify-content-center", "gap-2"];
+        const classList = ["color-line"];
         colorLine.classList.add(...classList);
         const colorsArray = color.split(";");
 
@@ -24,8 +25,10 @@ function criarTabelaDeCores() {
 
             div.classList.add("color", "rounded", "shadow-sm", "fw-bold", "d-flex", "align-items-center", "justify-content-center");
             div.style.backgroundColor = `rgb(${color})`;
+            div.style.textShadow = "1px 1px 0 #fff";
             div.setAttribute("data-id", codeColor);
             div.innerText = codeColor;
+            div.addEventListener("click", setColorInLastInputActive);
             colorLine.appendChild(div);
         });
         document.querySelector("#container-colors").appendChild(colorLine);
@@ -36,6 +39,7 @@ criarTabelaDeCores();
 
 function obterCor(e){
     e.preventDefault();
+    lastInputActive = e.target;
     const codeColor = e.target.value.toUpperCase();
 
     if (codeColor.length == 2){
@@ -43,6 +47,16 @@ function obterCor(e){
         const color = colorDiv.style.backgroundColor;
         e.target.style.backgroundColor = color;
     }
+}
+
+function setColorInLastInputActive(e){
+    const inputBorder = document.querySelector("#corBorda");
+    const inputBackground = document.querySelector("#corFundo");
+    
+    lastInputActive.style.backgroundColor = e.target.style.backgroundColor;
+    lastInputActive.value = e.target.innerText;
+
+    lastInputActive = inputBorder == lastInputActive ? inputBackground : inputBorder
 }
 
 function adicionarCor(e){
@@ -62,3 +76,20 @@ function adicionarCor(e){
     document.querySelector("#corBorda").style.backgroundColor = "#fff";
     document.querySelector("#corFundo").style.backgroundColor = "#fff";
 }
+
+document.querySelector("#variantColor").addEventListener("show.bs.modal", function (event) {
+    const baseColor = event.relatedTarget.style.backgroundColor;
+    const hsl = rgbToHsl(...parserHTMLtoRgb(baseColor));
+    const variantsL = [40, 60, 80, 100, 120, 140, 160, 180, 190]
+    const colorLine = variantColor.querySelector(".modal-body .color-line");
+    colorLine.innerHTML = `
+            ${variantsL.map((variant) => {
+                const hslVariant = [...hsl];
+                hslVariant[2] = variant/255;
+                const htmlColorVariant = parserHslToHtml(hslVariant);
+                return `<div class="color fw-bold d-flex align-items-center justify-content-center rounded"  style="background-color: ${htmlColorVariant}; text-shadow: 1px 1px 0 #fff">
+                ${(+htmlColorVariant.split(',')[2].replace('%)','')*255/100).toFixed()}
+            </div>`;
+            }).join('\n')}
+    `;
+});
