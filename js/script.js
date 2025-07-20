@@ -49,15 +49,28 @@ function obterCor(e){
     }
 }
 
+function setInputActive(e){
+    lastInputActive = e.target;
+}
+
 function setColorInLastInputActive(e){
     const inputBorder = document.querySelector("#corBorda");
     const inputBackground = document.querySelector("#corFundo");
-    
+
     lastInputActive.style.backgroundColor = e.target.style.backgroundColor;
     lastInputActive.value = e.target.innerText;
 
     lastInputActive = inputBorder == lastInputActive ? inputBackground : inputBorder
 }
+
+function setColorInInputActive(e, id){
+    const input = document.querySelector(`#${id}`);
+
+    input.style.backgroundColor = e.target.style.backgroundColor;
+    input.value = e.target.innerText;
+}
+
+
 
 function adicionarCor(e){
     e.preventDefault();
@@ -79,17 +92,24 @@ function adicionarCor(e){
 
 document.querySelector("#variantColor").addEventListener("show.bs.modal", function (event) {
     const baseColor = event.relatedTarget.style.backgroundColor;
+    if (!baseColor) {
+        event.preventDefault();
+        return;
+    }
     const hsl = rgbToHsl(...parserHTMLtoRgb(baseColor));
     const variantsL = [40, 60, 80, 100, 120, 140, 160, 180, 190]
     const colorLine = variantColor.querySelector(".modal-body .color-line");
     colorLine.innerHTML = `
-            ${variantsL.map((variant) => {
-                const hslVariant = [...hsl];
-                hslVariant[2] = variant/255;
-                const htmlColorVariant = parserHslToHtml(hslVariant);
-                return `<div class="color fw-bold d-flex align-items-center justify-content-center rounded"  style="background-color: ${htmlColorVariant}; text-shadow: 1px 1px 0 #fff">
-                ${(+htmlColorVariant.split(',')[2].replace('%)','')*255/100).toFixed()}
-            </div>`;
-            }).join('\n')}
-    `;
+        ${variantsL.map((variant) => {
+            const hslVariant = [...hsl];
+            hslVariant[2] = variant/255;
+            const htmlColorVariant = parserHslToHtml(hslVariant);
+            return (
+                `<div class="color fw-bold d-flex align-items-center justify-content-center rounded"
+                    style="background-color: ${htmlColorVariant}; text-shadow: 1px 1px 0 #fff"
+                    onclick="setColorInInputActive(event, '${event.relatedTarget.id}')">
+                    ${(+htmlColorVariant.split(',')[2].replace('%)','')*255/100).toFixed()}
+                </div>`
+            );
+        }).join('\n')}`;
 });

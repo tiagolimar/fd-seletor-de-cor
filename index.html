@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="./css/style.css" />
     <title>Seletor de Cor</title>
   </head>
-  <body>
+  <body class="bg-secondary-subtle">
     <div
       id="container-colors"
       class="d-flex flex-column w-100 gap-2 my-4"
     ></div>
 
     <form
-      class="d-flex gap-2 my-4 mx-4 border p-4 rounded-3 shadow-sm bg-white"
+      class="d-flex gap-2 my-4 mx-4 border p-4 rounded-3 shadow-sm bg-white align-items-end"
       onsubmit="adicionarCor(event)"
     >
       <div class="form-group w-100 d-flex flex-column">
@@ -34,8 +34,11 @@
           maxlength="2"
           id="corBorda"
           class="form-control"
+          data-bs-toggle="modal" 
+          data-bs-target="#variantColor" 
           required
           oninput="obterCor(event)"
+          onclick="setInputActive(event)"
         />
       </div>
 
@@ -46,12 +49,14 @@
           maxlength="2"
           id="corFundo"
           class="form-control"
+          data-bs-toggle="modal" 
+          data-bs-target="#variantColor" 
           required
           oninput="obterCor(event)"
         />
       </div>
 
-      <button class="btn btn-primary" type="submit">Adicionar</button>
+      <button class="btn btn-primary h-100" type="submit">Adicionar</button>
     </form>
 
     <div class="container">
@@ -65,7 +70,7 @@
             <th class="text-center">Remover</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody><tr><td colspan="5">Adicione Cores</td></tr></tbody>
       </table>
     </div>
 
@@ -88,13 +93,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <div class="color-line">
-                
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" onclick="adicionarDB()">Confirmar</button>
+            <div class="color-line"></div>
           </div>
         </div>
       </div>
