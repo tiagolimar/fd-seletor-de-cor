@@ -1,23 +1,29 @@
 let colors = [];
 
 function adicionarDB(color) {
-  if (color !== undefined) {
-    colors.push(color);
-    renderTable();
-  }
+    if (color !== undefined) {
+        colors.push(color);
+        renderTable();
+    }
 }
 
 function removerDB(colorId) {
-  colors = colors.filter((color, index) => index !== parseInt(colorId));
-  renderTable();
+    colors = colors.filter((color, index) => index !== parseInt(colorId));
+    renderTable();
+}
+
+function updateInputContent() {
+    const input = document.querySelector("#content");
+    const content = JSON.stringify(colors, null, 0);
+    input.value = content;
 }
 
 function renderTable() {
-  const tbody = document.querySelector("tbody");
-  tbody.innerHTML = "";
-  colors.forEach((color, index) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
+    const tbody = document.querySelector("tbody");
+    tbody.innerHTML = "";
+    colors.forEach((color, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
             <td data-id="${index}">${color.name}</td>
             <td data-id="${index}" style="background-color: ${color.colorBorder}">${color.colorBorder}</td>
             <td data-id="${index}" style="background-color: ${color.colorBackground}">${color.colorBackground}</td>
@@ -38,9 +44,11 @@ function renderTable() {
                 <button class="btn btn-danger w-100" onclick="removerDB('${index}')">X</button>
             </td>
         `;
-    tr.setAttribute("data-id", index);
-    tbody.appendChild(tr);
-  });
+        tr.setAttribute("data-id", index);
+        tbody.appendChild(tr);
+    });
+
+    updateInputContent();
 }
 
 renderTable();

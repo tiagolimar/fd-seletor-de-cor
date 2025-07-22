@@ -70,8 +70,6 @@ function setColorInInputActive(e, id){
     input.value = e.target.innerText;
 }
 
-
-
 function adicionarCor(e){
     e.preventDefault();
     const nome = document.querySelector("#nome").value;
@@ -113,3 +111,9 @@ document.querySelector("#variantColor").addEventListener("show.bs.modal", functi
             );
         }).join('\n')}`;
 });
+
+function importColors() {
+    const input = document.querySelector("#content");
+    colors = JSON.parse(input.value);
+    renderTable();
+}
